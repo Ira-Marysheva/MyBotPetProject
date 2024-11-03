@@ -9,7 +9,7 @@ const bot = new telegramApi(process.env.TOKEN, {polling: true})
 const start = async()=>{
     try {
         await sequelize.authenticate()
-        await sequelize.async()
+        await sequelize.asy
         let numberAttempts
         let gameId
         const chat = {}

@@ -9,7 +9,7 @@ module.exports = {
         })
     },
     againOptions: {
-        reply_markup:G=JSON.stringify({
+        reply_markup: JSON.stringify({
             inline_keyboard:[
                 [{text:'Почати нову гру', callback_data:'/again'}]
             ]

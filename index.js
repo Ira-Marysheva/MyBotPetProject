@@ -15,7 +15,7 @@ const start = async()=>{
         const chat = {}
         
         const startGame = async(chatId)=>{
-            numberAttempts = 4
+            numberAttempts = 1
             await bot.sendMessage( chatId, 'Зараз бот загадає число від 0 до 9, а ти маєш 4 спроби його вгадати')
             const randomNumber = Math.floor(Math.random() * 10)
             chat[chatId] = randomNumber
@@ -38,18 +38,16 @@ const start = async()=>{
             
             try {
                 if(text === '/start'){
-                    console.log('some code here....', chatId, typeof(chatId))
-                    const user = await UserModule.findOne({ where: { chatId } });
-                    // console.log(user, 'some text')
-                    // if (!user) {
-                    //     await UserModule.create({ chatId });
-                    // }
-                    // await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/4xf09f918b.webp')
+                    const user = await UserModule.findOne({ where: { chatId:chatId.toString() } });
+                    console.log(user)
+                    if (!user) {
+                        await UserModule.create({ chatId });
+                    }
+                    await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/4xf09f918b.webp')
                     return bot.sendMessage(chatId, `Привіт! Рада бачити ${firstName} у власному навчальному боті👋`)
                 }
                 if(text === '/info'){
-                    const user = await UserModule.findOne({where: {chatId}})
-                    console.log(user)
+                    const user = await UserModule.findOne({where: {chatId:chatId.toString()}})
                     await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/9xf09f988e.webp')
                     return  bot.sendMessage(chatId, `Я маю таку інформацію про тебе: \n ім'я ${firstName} \n ім'я під яким ти в Telegram ${userName} \n i ти ${userIsBot? 'бот🤖':'користувач👤'} у грі було виграно ${user.win} разів, а програно - ${user.fail} разів`)
                 }
@@ -75,11 +73,13 @@ const start = async()=>{
             }
             bot.sendMessage(chatId, `Ви обрали число ${data}`)
             if(+data === chat[chatId]){
+                await UserModule.update({win: sequelize.literal('win + 1')})
                 await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/38xf09fa5b3.webp')
                 return await bot.sendMessage(chatId, 'Вітаю!!! Ви вгадали число', againOptions)
             }else{
                 numberAttempts--
                 if(numberAttempts<=0){
+                    await UserModule.update({fail: sequelize.literal('fail + 1')})
                     await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/39xf09f98ad.webp')
                     return await bot.sendMessage(chatId, `Ви нажаль програли😔. Бот обрав число ${chat[chatId]}. Можливо пощастить на наступній грі`, againOptions)
                 }

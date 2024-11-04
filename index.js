@@ -15,7 +15,7 @@ const start = async()=>{
         const chat = {}
         
         const startGame = async(chatId)=>{
-            numberAttempts = 2
+            numberAttempts = 4
             await bot.sendMessage( chatId, 'Зараз бот загадає число від 0 до 9, а ти маєш 4 спроби його вгадати')
             const randomNumber = Math.floor(Math.random() * 10)
             chat[chatId] = randomNumber

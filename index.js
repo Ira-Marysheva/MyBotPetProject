@@ -38,7 +38,7 @@ const start = async()=>{
             
             try {
                 if(text === '/start'){
-                    console.log('some code here....', chatId)
+                    console.log('some code here....', chatId, typeof(chatId))
                     const user = await UserModule.findOne({ where: { chatId } });
                     // console.log(user, 'some text')
                     // if (!user) {

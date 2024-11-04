@@ -38,12 +38,18 @@ const start = async()=>{
             
             try {
                 if(text === '/start'){
-                    await UserModule.create({chatId})
-                    await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/4xf09f918b.webp')
+                    console.log('some code here....', chatId)
+                    const user = await UserModule.findOne({ where: { chatId } });
+                    // console.log(user, 'some text')
+                    // if (!user) {
+                    //     await UserModule.create({ chatId });
+                    // }
+                    // await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/4xf09f918b.webp')
                     return bot.sendMessage(chatId, `Привіт! Рада бачити ${firstName} у власному навчальному боті👋`)
                 }
                 if(text === '/info'){
                     const user = await UserModule.findOne({where: {chatId}})
+                    console.log(user)
                     await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/9xf09f988e.webp')
                     return  bot.sendMessage(chatId, `Я маю таку інформацію про тебе: \n ім'я ${firstName} \n ім'я під яким ти в Telegram ${userName} \n i ти ${userIsBot? 'бот🤖':'користувач👤'} у грі було виграно ${user.win} разів, а програно - ${user.fail} разів`)
                 }
@@ -55,6 +61,7 @@ const start = async()=>{
                 await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/12xf09fa4b7e2808de29982efb88f.webp')
                 return bot.sendMessage(chatId, `Я не знаю такої команди, ${firstName} \n Перевірте написання команди знову`)
             } catch (error) {
+                console.log(error)
                 return await bot.sendMessage(chatId, `Щось пішло не так. Повторіть спробу пізніше`)
             }
         })

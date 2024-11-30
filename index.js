@@ -51,7 +51,7 @@ const start = async()=>{
                 if(text === '/info'){
                     const user = await userModule.findOne({where: {chatId:chatId.toString()}})
                     await bot.sendSticker(chatId, 'https://sl.combot.org/utyaduck/webp/9xf09f988e.webp')
-                    return  bot.sendMessage(chatId, `Я маю таку інформацію про тебе: \n ім'я ${firstName} \n ім'я під яким ти в Telegram ${userName} \n i ти ${userIsBot? 'бот🤖':'користувач👤'} \n у грі було виграно ${user.win} разів, а програно - ${user.fail} разів`)
+                    return  bot.sendMessage(chatId, `1df5fa71 Я маю таку інформацію про тебе: \n ім'я ${firstName} \n ім'я під яким ти в Telegram ${userName} \n i ти ${userIsBot? 'бот🤖':'користувач👤'} \n у грі було виграно ${user.win} разів, а програно - ${user.fail} разів`)
                 }
                 if(text === '/game'){
                     await bot.sendSticker(chatId,'https://sl.combot.org/utyaduck/webp/26xf09f93a8.webp')

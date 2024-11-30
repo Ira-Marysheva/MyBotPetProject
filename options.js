@@ -14,5 +14,12 @@ module.exports = {
                 [{text:'Почати нову гру', callback_data:'/again'}]
             ]
         })
+    },
+    createTaskOptions:{
+        reply_markup: JSON.stringify({
+            inline_keyboard:[
+                [{text:'2 дні', callback_data:'2'}, {text:'3 дні', callback_data:'3'}, {text:'4 дні', callback_data:'4'}]
+            ]
+        })
     }
 }
